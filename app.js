@@ -80,16 +80,32 @@ var TodoList = function (_React$Component2) {
     var _this2 = _possibleConstructorReturn(this, (TodoList.__proto__ || Object.getPrototypeOf(TodoList)).call(this, props));
 
     _this2.state = {
-      todos: [{ id: 1, text: "Item 1", done: false }, { id: 2, text: "Item 2", done: false }, { id: 3, text: "Item 3", done: false }, { id: 4, text: "Item 4", done: false }]
+      todos: [{ _id: 1, text: "Item 1", done: false }, { _id: 2, text: "Item 2", done: false }, { _id: 3, text: "Item 3", done: false }, { _id: 4, text: "Item 4", done: false }]
     };
+
+    _this2.newTodo = _this2.newTodo.bind(_this2);
     return _this2;
   }
 
   _createClass(TodoList, [{
+    key: "newTodo",
+    value: function newTodo(event) {
+      event.preventDefault();
+
+      todos = this.state.todos;
+      todos.push({ _id: "" });
+
+      this.setState(function (state) {
+        return {
+          todos: todos
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var todoList = this.state.todos.map(function (todo) {
-        return React.createElement(Todo, { key: todo.id.toString(), id: todo.id, text: todo.text, done: todo.done });
+        return React.createElement(Todo, { key: todo._id.toString(), id: todo.id, text: todo.text, done: todo.done });
       });
 
       return React.createElement(
@@ -100,7 +116,12 @@ var TodoList = function (_React$Component2) {
           null,
           "React Todo App"
         ),
-        todoList
+        todoList,
+        React.createElement(
+          "a",
+          { href: "#", onClick: this.newTodo },
+          "New Todo"
+        )
       );
     }
   }]);
